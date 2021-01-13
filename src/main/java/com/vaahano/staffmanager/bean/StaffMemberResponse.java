@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StaffMember extends CreateStaffMember {
+public class StaffMemberResponse extends CreateStaffMember {
 	
 	private String id;
 }

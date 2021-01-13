@@ -1,16 +1,15 @@
 package com.vaahano.staffmanager.service.api;
 
-import org.springframework.stereotype.Service;
-
 import com.vaahano.staffmanager.bean.CreateStaffMember;
-import com.vaahano.staffmanager.bean.StaffMember;
+import com.vaahano.staffmanager.bean.StaffMemberResponse;
+import com.vaahano.staffmanager.exception.StaffManagerExeption;
 
-@Service
+
 public interface StaffMemberCRUDService {
 	
-	void createStaffMember(CreateStaffMember member);
+	void createStaffMember(CreateStaffMember member) throws StaffManagerExeption;
 	
-	StaffMember getStaffMember(String businessUnit, String staffId);
+	StaffMemberResponse getStaffMember(String staffId) throws StaffManagerExeption;
 	
 	
 }

@@ -10,12 +10,15 @@ import lombok.Data;
 public class StaffMember {
 	
 	@Id
-	private Long id;
+	private String id;
 	private String name;
 	private String phoneNumber;
 	private String businessUnit;
 	private String designation;
 	private String role;
+	private String assignedBus;
+	private String busLastAssignedOn;
+	private String busLastAssignedBy;
 	
 	
 }
