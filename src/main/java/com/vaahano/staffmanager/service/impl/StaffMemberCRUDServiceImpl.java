@@ -38,9 +38,10 @@ public class StaffMemberCRUDServiceImpl implements StaffMemberCRUDService {
 		StaffMember staff = opt.get();
 		StaffMemberResponse response = new StaffMemberResponse();
 		response.setBusinessUnit(staff.getBusinessUnit());
-		response.setId(staff.getStaffId());
 		response.setDesignation(staff.getDesignation());
 		response.setRole(staff.getRole());
+		response.setName(staff.getName());
+		response.setStaffId(staff.getStaffId());
 		return response;
 	}
 

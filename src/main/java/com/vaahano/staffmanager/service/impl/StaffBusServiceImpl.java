@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vaahano.staffmanager.db.domain.StaffMember;
 import com.vaahano.staffmanager.db.repository.StaffMembersRepository;
 import com.vaahano.staffmanager.exception.StaffManagerException;
 import com.vaahano.staffmanager.service.api.StaffBusService;
 
+@Service
 public class StaffBusServiceImpl implements StaffBusService {
 	
 	@Autowired StaffMembersRepository staffRepository;

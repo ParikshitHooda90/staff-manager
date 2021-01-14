@@ -9,5 +9,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StaffMemberResponse extends CreateStaffMember {
 	
-	private String id;
 }

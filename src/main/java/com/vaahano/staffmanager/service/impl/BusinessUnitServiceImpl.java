@@ -21,7 +21,7 @@ public class BusinessUnitServiceImpl implements BusinessUnitService{
 	@Override
 	public void createBusinessUnit(String businessUnit, String country, String state) {
 		BusinessUnit unit = new BusinessUnit();
-		unit.setBusinessUnit(businessUnit);
+		unit.setBusinessUnit(businessUnit.toUpperCase());
 		unit.setCountry(country);
 		unit.setState(state);
 		unit.setStaffIds(new ArrayList<String>());

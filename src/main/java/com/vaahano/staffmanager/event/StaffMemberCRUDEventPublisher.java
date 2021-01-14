@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import com.vaahano.staffmanager.event.data.StaffMemberCreatedEvent;
+import com.vaahano.staffmanager.event.data.StaffMemberDeletedEvent;
 
 @Component
 public class StaffMemberCRUDEventPublisher {
@@ -18,7 +19,7 @@ public class StaffMemberCRUDEventPublisher {
 	}
 	
 	public void publishStaffMemberRemovedEvent(String staffId, String businessUnit) {
-		StaffMemberCreatedEvent event = new StaffMemberCreatedEvent(this, staffId, businessUnit);
+		StaffMemberDeletedEvent event = new StaffMemberDeletedEvent(this, staffId, businessUnit);
 		publisher.publishEvent(event);
 	}
 }

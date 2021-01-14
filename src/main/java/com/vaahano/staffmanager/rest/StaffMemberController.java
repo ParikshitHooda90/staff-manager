@@ -32,18 +32,18 @@ public class StaffMemberController {
 	@Autowired BusinessUnitService businessUnitService;
 
 	@PostMapping("/create")
-	private ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
+	 ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
 		staffCrudService.createStaffMember(request);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("/{staffId}")
-	private StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
+	 StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
 		return staffCrudService.getStaffMember(staffId);
 	}
 	
 	@GetMapping("/{staffId}/assignedBus")
-	private ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
+	 ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
 		
 		String busId = staffBusService.getAssignedBusToStaffMember(staffId);
 		AssignedBus  bus = new AssignedBus();
@@ -51,8 +51,8 @@ public class StaffMemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(bus);
 	}
 	
-	@PutMapping("/{staffId}/assignBus")
-	private ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerException {
+	@PutMapping("/assignBus")
+	 ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerException {
 		String staffId = request.getStaffId();
 		String busId = request.getBusId();
 		
@@ -62,13 +62,13 @@ public class StaffMemberController {
 	}
 	
 	@DeleteMapping("/{staffId}")
-	private ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
+	 ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
 		staffCrudService.deleteStaffMember(staffId);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("{businessUnit}/getAll")
-	private List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
+	 List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
 		return businessUnitService.getAllStaffMemberIdsForBusinessUnit(businessUnit);
 	}
 	
