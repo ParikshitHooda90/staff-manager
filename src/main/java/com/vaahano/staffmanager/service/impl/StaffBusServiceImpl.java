@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaahano.staffmanager.db.domain.StaffMember;
 import com.vaahano.staffmanager.db.repository.StaffMembersRepository;
-import com.vaahano.staffmanager.exception.StaffManagerExeption;
+import com.vaahano.staffmanager.exception.StaffManagerException;
 import com.vaahano.staffmanager.service.api.StaffBusService;
 
 public class StaffBusServiceImpl implements StaffBusService {
@@ -15,13 +15,13 @@ public class StaffBusServiceImpl implements StaffBusService {
 	@Autowired StaffMembersRepository staffRepository;
 
 	@Override
-	public void assignBusToStaffMember( String staffId, String busId) throws StaffManagerExeption {
+	public void assignBusToStaffMember( String staffId, String busId) throws StaffManagerException {
 		// if already assigned, override
 		// else insert
 		Optional<StaffMember> opt = staffRepository.findById(staffId);
 	
 		if(opt.isEmpty()) {
-			throw new StaffManagerExeption(StaffManagerExeption.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
+			throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
 		}else {
 			StaffMember doc = opt.get();
 			doc.setAssignedBus(busId);
@@ -31,16 +31,16 @@ public class StaffBusServiceImpl implements StaffBusService {
 	}
 
 	@Override
-	public String getAssignedBusToStaffMember(String staffId) throws StaffManagerExeption {
+	public String getAssignedBusToStaffMember(String staffId) throws StaffManagerException {
 		Optional<StaffMember> opt = staffRepository.findById(staffId);
 		if(opt.isEmpty()) {
-			throw new StaffManagerExeption(StaffManagerExeption.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
+			throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
 		}else {
 			StaffMember staff = opt.get();
 			if(null != staff.getAssignedBus()) {
 				return staff.getAssignedBus();
 			}else {
-				throw new StaffManagerExeption(StaffManagerExeption.ExceptionMessage.NO_BUS_ASSIGNED_TO_STAFF_MEMBER);
+				throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_BUS_ASSIGNED_TO_STAFF_MEMBER);
 			}
 		}
 	}

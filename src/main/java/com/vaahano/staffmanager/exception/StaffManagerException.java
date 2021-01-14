@@ -1,14 +1,14 @@
 package com.vaahano.staffmanager.exception;
 
-public class StaffManagerExeption extends Exception{
+public class StaffManagerException extends Exception{
 
 	private static final long serialVersionUID = 9041773419465751512L;
 
-	public StaffManagerExeption(ExceptionMessage exception) {
+	public StaffManagerException(ExceptionMessage exception) {
 		super(exception.getCause());
 	}
 	
-	public StaffManagerExeption(Exception e) {
+	public StaffManagerException(Exception e) {
 		super(e);
 	}
 	

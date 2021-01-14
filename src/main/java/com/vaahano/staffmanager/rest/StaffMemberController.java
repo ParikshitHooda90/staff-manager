@@ -15,31 +15,30 @@ import com.vaahano.staffmanager.bean.AssignedBus;
 import com.vaahano.staffmanager.bean.CreateStaffMember;
 import com.vaahano.staffmanager.bean.StaffBusAssigment;
 import com.vaahano.staffmanager.bean.StaffMemberResponse;
-import com.vaahano.staffmanager.exception.StaffManagerExeption;
+import com.vaahano.staffmanager.exception.StaffManagerException;
 import com.vaahano.staffmanager.service.api.StaffBusService;
 import com.vaahano.staffmanager.service.api.StaffMemberCRUDService;
 
 @RestController
 @RequestMapping("/staff")
-public class StaffCRUDController {
+public class StaffMemberController {
 	
 	@Autowired StaffBusService staffBusService;
 	@Autowired StaffMemberCRUDService staffCrudService;
 
-	
 	@PostMapping("/create")
-	private ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerExeption {
+	private ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
 		staffCrudService.createStaffMember(request);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("/{staffId}")
-	private StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerExeption {
+	private StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
 		return staffCrudService.getStaffMember(staffId);
 	}
 	
 	@GetMapping("/{staffId}/assignedBus")
-	private ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerExeption {
+	private ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
 		
 		String busId = staffBusService.getAssignedBusToStaffMember(staffId);
 		AssignedBus  bus = new AssignedBus();
@@ -48,7 +47,7 @@ public class StaffCRUDController {
 	}
 	
 	@PutMapping("/{staffId}/assignBus")
-	private ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerExeption {
+	private ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerException {
 		String staffId = request.getStaffId();
 		String busId = request.getBusId();
 		
