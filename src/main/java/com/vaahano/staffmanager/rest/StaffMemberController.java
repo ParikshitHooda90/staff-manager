@@ -1,8 +1,11 @@
 package com.vaahano.staffmanager.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,7 @@ import com.vaahano.staffmanager.bean.CreateStaffMember;
 import com.vaahano.staffmanager.bean.StaffBusAssigment;
 import com.vaahano.staffmanager.bean.StaffMemberResponse;
 import com.vaahano.staffmanager.exception.StaffManagerException;
+import com.vaahano.staffmanager.service.api.BusinessUnitService;
 import com.vaahano.staffmanager.service.api.StaffBusService;
 import com.vaahano.staffmanager.service.api.StaffMemberCRUDService;
 
@@ -25,6 +29,7 @@ public class StaffMemberController {
 	
 	@Autowired StaffBusService staffBusService;
 	@Autowired StaffMemberCRUDService staffCrudService;
+	@Autowired BusinessUnitService businessUnitService;
 
 	@PostMapping("/create")
 	private ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
@@ -55,4 +60,16 @@ public class StaffMemberController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
+	
+	@DeleteMapping("/{staffId}")
+	private ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
+		staffCrudService.deleteStaffMember(staffId);
+		return ResponseEntity.status(HttpStatus.OK).body("OK");
+	}
+	
+	@GetMapping("{businessUnit}/getAll")
+	private List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
+		return businessUnitService.getAllStaffMemberIdsForBusinessUnit(businessUnit);
+	}
+	
 }
