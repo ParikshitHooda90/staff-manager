@@ -10,7 +10,7 @@ import lombok.Data;
 public class StaffMember {
 	
 	@Id
-	private String staffId;
+	private String id;
 	private String name;
 	private String phoneNumber;
 	private String businessUnit;

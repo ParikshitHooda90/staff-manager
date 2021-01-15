@@ -23,7 +23,7 @@ public class StaffMemberCRUDServiceImpl implements StaffMemberCRUDService {
 	public void createStaffMember(CreateStaffMember member) throws StaffManagerException {
 		StaffMember mem = new StaffMember();
 		mem.setBusinessUnit(member.getBusinessUnit());
-		mem.setStaffId(member.getStaffId());
+		mem.setId(member.getStaffId());
 		mem.setDesignation(member.getDesignation());
 		mem.setRole(member.getRole());
 		mem.setPhoneNumber(member.getPhoneNumber());
@@ -41,7 +41,7 @@ public class StaffMemberCRUDServiceImpl implements StaffMemberCRUDService {
 		response.setDesignation(staff.getDesignation());
 		response.setRole(staff.getRole());
 		response.setName(staff.getName());
-		response.setStaffId(staff.getStaffId());
+		response.setStaffId(staff.getId());
 		return response;
 	}
 
