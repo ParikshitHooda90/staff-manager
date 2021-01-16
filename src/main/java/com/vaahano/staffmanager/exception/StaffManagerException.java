@@ -14,7 +14,8 @@ public class StaffManagerException extends Exception{
 	
 	public static enum ExceptionMessage{
 		NO_STAFF_MEMBER_EXISTS("No staff member exists"),
-		NO_BUS_ASSIGNED_TO_STAFF_MEMBER("No bus assigned to staff member");
+		NO_BUS_ASSIGNED_TO_STAFF_MEMBER("No bus assigned to staff member"),
+		ILLFORMATED_STAFF_ID("staff id is ill-formated");
 		
 		private String cause;
 		

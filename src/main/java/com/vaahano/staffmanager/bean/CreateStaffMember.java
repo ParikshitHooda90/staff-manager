@@ -11,4 +11,5 @@ public class CreateStaffMember {
 	private String businessUnit;
 	private String designation;
 	private String role;
+	private String password;
 }
