@@ -17,29 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vaahano.staffmanager.bean.AssignedBus;
 import com.vaahano.staffmanager.bean.CreateStaffMember;
 import com.vaahano.staffmanager.bean.StaffBusAssigment;
+import com.vaahano.staffmanager.bean.StaffLoginRequest;
+import com.vaahano.staffmanager.bean.StaffLoginResponse;
 import com.vaahano.staffmanager.bean.StaffMemberResponse;
 import com.vaahano.staffmanager.exception.StaffManagerException;
 import com.vaahano.staffmanager.service.api.BusinessUnitService;
 import com.vaahano.staffmanager.service.api.StaffBusService;
-import com.vaahano.staffmanager.service.api.StaffMemberCRUDService;
+import com.vaahano.staffmanager.service.api.StaffMemberService;
 
 @RestController
 @RequestMapping("/staff")
 public class StaffMemberController {
 	
 	@Autowired StaffBusService staffBusService;
-	@Autowired StaffMemberCRUDService staffCrudService;
+	@Autowired StaffMemberService staffMemberService;
 	@Autowired BusinessUnitService businessUnitService;
 
 	@PostMapping("/create")
 	 ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
-		staffCrudService.createStaffMember(request);
+		staffMemberService.createStaffMember(request);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("/{staffId}")
 	 StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
-		return staffCrudService.getStaffMember(staffId);
+		return staffMemberService.getStaffMember(staffId);
 	}
 	
 	@GetMapping("/{staffId}/assignedBus")
@@ -63,13 +65,23 @@ public class StaffMemberController {
 	
 	@DeleteMapping("/{staffId}")
 	 ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
-		staffCrudService.deleteStaffMember(staffId);
+		staffMemberService.deleteStaffMember(staffId);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
-	@GetMapping("{businessUnit}/getAll")
+	@GetMapping("/{businessUnit}/getAll")
 	 List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
 		return businessUnitService.getAllStaffMemberIdsForBusinessUnit(businessUnit);
+	}
+	
+	@PostMapping("/login")
+	StaffLoginResponse login(@RequestBody StaffLoginRequest request) {
+		try {
+			return staffMemberService.doLogin(request.getStaffId(), request.getPassword());
+		} catch (StaffManagerException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

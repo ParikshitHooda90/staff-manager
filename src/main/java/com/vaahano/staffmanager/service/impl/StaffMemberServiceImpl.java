@@ -1,5 +1,6 @@
 package com.vaahano.staffmanager.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,19 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vaahano.staffmanager.bean.CreateStaffMember;
-import com.vaahano.staffmanager.bean.StaffMemberLoginResponse;
+import com.vaahano.staffmanager.bean.StaffLoginResponse;
+import com.vaahano.staffmanager.bean.StaffLogoutResponse;
 import com.vaahano.staffmanager.bean.StaffMemberResponse;
 import com.vaahano.staffmanager.db.domain.StaffMember;
+import com.vaahano.staffmanager.db.domain.StaffSessionActive;
 import com.vaahano.staffmanager.db.repository.StaffMembersRepository;
+import com.vaahano.staffmanager.db.repository.StaffSessionActiveRepository;
 import com.vaahano.staffmanager.event.StaffMemberCRUDEventPublisher;
 import com.vaahano.staffmanager.exception.StaffManagerException;
-import com.vaahano.staffmanager.service.api.StaffMemberCRUDService;
+import com.vaahano.staffmanager.service.api.StaffMemberService;
 
 @Service
-public class StaffMemberCRUDServiceImpl implements StaffMemberCRUDService {
+public class StaffMemberServiceImpl implements StaffMemberService {
 
 	@Autowired StaffMembersRepository staffRepository;
 	@Autowired StaffMemberCRUDEventPublisher staffMemberEventPublisher;
+	@Autowired StaffSessionActiveRepository sessionActiveRepository;
 	
 	@Override
 	public void createStaffMember(CreateStaffMember member) throws StaffManagerException {
@@ -79,19 +84,57 @@ public class StaffMemberCRUDServiceImpl implements StaffMemberCRUDService {
 	}
 
 	@Override
-	public StaffMemberLoginResponse doLogin(String staffId, String password) throws StaffManagerException {
-		StaffMemberLoginResponse res = null;
+	public StaffLoginResponse doLogin(String staffId, String password) throws StaffManagerException {
+		StaffLoginResponse res = null;
+		
+		String authToken = UUID.randomUUID().toString();
 		if(validateStaffMemberCredentials(staffId, password)) {
-			res = new StaffMemberLoginResponse();
+			res = new StaffLoginResponse();
 			res.setValidated(true);
-			res.setAuthToken(UUID.randomUUID().toString());
+			res.setAuthToken(authToken);
 			
 		}else {
-			res = new StaffMemberLoginResponse();
+			res = new StaffLoginResponse();
 			res.setValidated(false);
 		}
 		// log this transaction into DB async, useful for reporting ?
+		StaffSessionActive  doc = new StaffSessionActive();
+		doc.setAuthToken(authToken);
+		doc.setStaffId(staffId);
+		doc.setLoginTime(LocalDateTime.now().toString());
+		sessionActiveRepository.insert(doc);
+		
 		return res;
 	}
+
+	@Override
+	public StaffLogoutResponse doLogout(String staffId, String authToken) throws StaffManagerException {
+		
+		// log this transaction into DB async, useful for reporting ?
+		StaffLogoutResponse res = new StaffLogoutResponse();
+		res.setStaffId(staffId);
+		res.setSuccessful(false);
+		
+		Optional<StaffSessionActive> opt = sessionActiveRepository.findById(authToken);
+		
+		if(opt.isPresent() && opt.get().getStaffId().equals(staffId) ) {
+			// auth token is of same staff member
+			res.setSuccessful(true);
+		
+			sessionActiveRepository.delete(opt.get());
+			return res;
+			
+		}else if(opt.isPresent() && !opt.get().getStaffId().equals(staffId)){
+			// auth token is valid but belongs to some other staff user which is provided in request.
+			return res;
+		} else{
+			
+			return res;
+		}
+		
+	}
+
+	
+	
 
 }

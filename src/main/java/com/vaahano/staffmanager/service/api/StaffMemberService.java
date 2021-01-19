@@ -1,12 +1,13 @@
 package com.vaahano.staffmanager.service.api;
 
 import com.vaahano.staffmanager.bean.CreateStaffMember;
-import com.vaahano.staffmanager.bean.StaffMemberLoginResponse;
+import com.vaahano.staffmanager.bean.StaffLoginResponse;
+import com.vaahano.staffmanager.bean.StaffLogoutResponse;
 import com.vaahano.staffmanager.bean.StaffMemberResponse;
 import com.vaahano.staffmanager.exception.StaffManagerException;
 
 
-public interface StaffMemberCRUDService {
+public interface StaffMemberService {
 	
 	void createStaffMember(CreateStaffMember member) throws StaffManagerException;
 	
@@ -14,5 +15,8 @@ public interface StaffMemberCRUDService {
 	
 	void deleteStaffMember(String staffId) throws StaffManagerException;
 	
-	StaffMemberLoginResponse doLogin(String staffId, String password) throws StaffManagerException;
+	StaffLoginResponse doLogin(String staffId, String password) throws StaffManagerException;
+	
+	StaffLogoutResponse doLogout(String staffId, String authToken) throws StaffManagerException;
+
 }
