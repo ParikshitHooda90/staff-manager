@@ -1,0 +1,58 @@
+[
+	{
+ 	 	"businessUnit": "HR",
+ 	 	"designation": "Senior Conductor",
+  		"name": "Satpal Singh",
+  		"password": "singhsatpal97",
+  		"phoneNumber": "9999888892",
+ 		"role": "Conductor",
+  		"staffId": "singhsatpal97"
+	},
+	{
+ 	 	"businessUnit": "HR",
+ 	 	"designation": "Junior Conductor",
+  		"name": "Bhupendra Kumar",
+  		"password": "kumarbhuph",
+  		"phoneNumber": "9999888891",
+ 		"role": "Conductor",
+  		"staffId": "kumarbhuph1"
+	},
+	{
+ 	 	"businessUnit": "DTC",
+ 	 	"designation": "Supervisor",
+  		"name": "Pankaj Yadav",
+  		"password": "pankajyadav",
+  		"phoneNumber": "9999888893",
+ 		"role": "Conductor",
+  		"staffId": "yadavpankaj1"
+	},
+	{
+ 	 	"businessUnit": "PRTC",
+ 	 	"designation": "Senior Conductor",
+  		"name": "Hardeep Singh",
+  		"password": "hardeepsingh1",
+  		"phoneNumber": "9969888892",
+ 		"role": "Conductor",
+  		"staffId": "singhhardeep1"
+	},
+	{
+ 	 	"businessUnit": "CTU",
+ 	 	"designation": "Senior Conductor",
+  		"name": "Suresh sindhu",
+  		"password": "sureshsindhu",
+  		"phoneNumber": "9299888892",
+ 		"role": "Conductor",
+  		"staffId": "sindhusuresh"
+	},
+	{
+ 	 	"businessUnit": "UNBS",
+ 	 	"designation": "Senior Conductor",
+  		"name": "Gola bhorapatte",
+  		"password": "bhoragora",
+  		"phoneNumber": "9399888892",
+ 		"role": "Conductor",
+  		"staffId": "bhoragora"
+	}
+	
+	
+]

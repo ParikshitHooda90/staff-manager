@@ -1,12 +1,17 @@
 package com.vaahano.staffmanager.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.vaahano.staffmanager.FileResourceUtil;
 import com.vaahano.staffmanager.bean.CreateStaffMember;
 import com.vaahano.staffmanager.bean.StaffLoginResponse;
 import com.vaahano.staffmanager.bean.StaffLogoutResponse;
@@ -20,7 +25,7 @@ import com.vaahano.staffmanager.exception.StaffManagerException;
 import com.vaahano.staffmanager.service.api.StaffMemberService;
 
 @Service
-public class StaffMemberServiceImpl implements StaffMemberService {
+public class StaffMemberServiceImpl implements StaffMemberService, CommandLineRunner {
 
 	@Autowired StaffMembersRepository staffRepository;
 	@Autowired StaffMemberCRUDEventPublisher staffMemberEventPublisher;
@@ -132,6 +137,28 @@ public class StaffMemberServiceImpl implements StaffMemberService {
 			return res;
 		}
 		
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		
+		staffRepository.deleteAll();
+		
+		String content = FileResourceUtil.getContent("staffdb/StaffMembers.json");
+		Gson gson = new Gson();
+		List<Map<String,String>> list = gson.fromJson(content, List.class);
+		list.stream().forEach(e -> {
+			StaffMember mem = new StaffMember();
+			mem.setId(e.get("staffId"));
+			mem.setBusinessUnit(e.get("businessUnit"));
+			mem.setName(e.get("name"));
+			mem.setDesignation(e.get("designation"));
+			mem.setRole(e.get("role"));
+			mem.setPassword(e.get("password"));
+			mem.setPhoneNumber(e.get("phoneNumber"));
+			
+			staffRepository.insert(mem);
+		});
 	}
 
 	

@@ -1,0 +1,28 @@
+[
+	{
+	"businessUnit" :"HR",
+	"country":"India",
+	"state":"Haryana"
+	},
+	{
+	"businessUnit" :"DTC",
+	"country":"India",
+	"state":"Delhi"
+	},
+	{
+	"businessUnit" :"PRTC",
+	"country":"India",
+	"state":"Punjab"
+	},
+	{
+	"businessUnit" :"CTU",
+	"country":"India",
+	"state":"Chandigarh"
+	},
+	{
+	"businessUnit" :"UNBS",
+	"country":"Nepal",
+	"state":"Uttar Nepal"
+	}
+	
+]
