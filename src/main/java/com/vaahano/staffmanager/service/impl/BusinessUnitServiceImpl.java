@@ -2,8 +2,10 @@ package com.vaahano.staffmanager.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,6 @@ public class BusinessUnitServiceImpl implements BusinessUnitService{
 		BusinessUnit unit = opt.get();
 		unit.getStaffIds().remove(staffId);
 		businessUnitRepository.save(unit);
-		
 	}
 	
 	@Override
@@ -52,6 +53,14 @@ public class BusinessUnitServiceImpl implements BusinessUnitService{
 		Optional<BusinessUnit> opt = businessUnitRepository.findById(businessUnit);
 		BusinessUnit unit = opt.get();
 		return ImmutableList.copyOf(unit.getStaffIds());
+	}
+
+	@Override
+	public List<String> getAllBusinessUnits() {
+		List<BusinessUnit> businessUnits = businessUnitRepository.findAll();
+		return businessUnits.stream()
+				.map(bu -> bu.getBusinessUnit())
+				.collect(Collectors.toList());
 	}
 
 }

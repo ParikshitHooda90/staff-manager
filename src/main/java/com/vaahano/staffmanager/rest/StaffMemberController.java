@@ -35,18 +35,18 @@ public class StaffMemberController {
 	@Autowired BusinessUnitService businessUnitService;
 
 	@PostMapping("/create")
-	 ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
+	 public ResponseEntity<String> createStaffMember(@RequestBody CreateStaffMember request) throws StaffManagerException {
 		staffMemberService.createStaffMember(request);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("/{staffId}")
-	 StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
+	public StaffMemberResponse getStaffMember(@PathVariable String staffId) throws StaffManagerException {
 		return staffMemberService.getStaffMember(staffId);
 	}
 	
 	@GetMapping("/{staffId}/assignedBus")
-	 ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
+	public ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
 		
 		Optional<String> busId = staffBusService.getAssignedBusToStaffMember(staffId);
 		
@@ -61,7 +61,7 @@ public class StaffMemberController {
 	}
 	
 	@PutMapping("/assignBus")
-	 ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerException {
+	public ResponseEntity<String> assignBusToStaffMember(@RequestBody StaffBusAssigment request) throws StaffManagerException {
 		String staffId = request.getStaffId();
 		String busId = request.getBusId();
 		
@@ -71,13 +71,13 @@ public class StaffMemberController {
 	}
 	
 	@DeleteMapping("/{staffId}")
-	 ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
+	public ResponseEntity<String> deleteStaffMember(@PathVariable String staffId) throws StaffManagerException {
 		staffMemberService.deleteStaffMember(staffId);
 		return ResponseEntity.status(HttpStatus.OK).body("OK");
 	}
 	
 	@GetMapping("/{businessUnit}/getAll")
-	 List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
+	public List<String> getAllStaffMembersForBusinessUnit(@PathVariable String businessUnit){
 		return businessUnitService.getAllStaffMemberIdsForBusinessUnit(businessUnit);
 	}
 	
