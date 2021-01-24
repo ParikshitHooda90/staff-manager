@@ -1,6 +1,7 @@
 package com.vaahano.staffmanager.rest;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,10 +48,16 @@ public class StaffMemberController {
 	@GetMapping("/{staffId}/assignedBus")
 	 ResponseEntity<AssignedBus> getAssignedBusOfConductor(@PathVariable String staffId) throws StaffManagerException {
 		
-		String busId = staffBusService.getAssignedBusToStaffMember(staffId);
-		AssignedBus  bus = new AssignedBus();
-		bus.setBusId(busId);
-		return ResponseEntity.status(HttpStatus.OK).body(bus);
+		Optional<String> busId = staffBusService.getAssignedBusToStaffMember(staffId);
+		
+		if(busId.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new AssignedBus());
+		}else {
+			AssignedBus  bus = new AssignedBus();
+			bus.setBusId(busId.get());
+			return ResponseEntity.status(HttpStatus.OK).body(bus);
+		}
+		
 	}
 	
 	@PutMapping("/assignBus")

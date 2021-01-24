@@ -42,17 +42,14 @@ public class StaffBusServiceImpl implements StaffBusService {
 	}
 
 	@Override
-	public String getAssignedBusToStaffMember(String staffId) throws StaffManagerException {
+	public Optional<String> getAssignedBusToStaffMember(String staffId) throws StaffManagerException {
 		Optional<StaffMember> opt = staffRepository.findById(staffId);
 		if(opt.isEmpty()) {
 			throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
 		}else {
 			StaffMember staff = opt.get();
-			if(null != staff.getAssignedBus()) {
-				return staff.getAssignedBus();
-			}else {
-				throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_BUS_ASSIGNED_TO_STAFF_MEMBER);
-			}
+			Optional<String> busId = Optional.ofNullable(staff.getAssignedBus());
+			return busId;
 		}
 	}
 
