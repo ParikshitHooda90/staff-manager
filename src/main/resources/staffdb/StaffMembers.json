@@ -3,6 +3,7 @@
  	 	"businessUnit": "HR",
  	 	"designation": "Senior Conductor",
   		"name": "Satpal Singh",
+		"assignedBus":"HR07C8112",
   		"password": "singhsatpal97",
   		"phoneNumber": "9999888892",
  		"role": "Conductor",

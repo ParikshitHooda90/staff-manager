@@ -95,12 +95,13 @@ public class StaffMemberServiceImpl implements StaffMemberService, CommandLineRu
 		String authToken = UUID.randomUUID().toString();
 		if(validateStaffMemberCredentials(staffId, password)) {
 			res = new StaffLoginResponse();
-			res.setValidated(true);
+			res.setSuccessful(true);
 			res.setAuthToken(authToken);
-			
+			res.setStaffId(staffId);
 		}else {
 			res = new StaffLoginResponse();
-			res.setValidated(false);
+			res.setSuccessful(false);
+			res.setErrorMessage("Unable to validate credentials");
 		}
 		// log this transaction into DB async, useful for reporting ?
 		StaffSessionActive  doc = new StaffSessionActive();
@@ -150,6 +151,7 @@ public class StaffMemberServiceImpl implements StaffMemberService, CommandLineRu
 		list.stream().forEach(e -> {
 			StaffMember mem = new StaffMember();
 			mem.setId(e.get("staffId"));
+			mem.setAssignedBus(e.get("assignedBus"));
 			mem.setBusinessUnit(e.get("businessUnit"));
 			mem.setName(e.get("name"));
 			mem.setDesignation(e.get("designation"));

@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StaffLoginResponse  extends MetaResponse {
 	
-	private boolean isValidated;
 	private String authToken;
+	private String staffId;
 }

@@ -48,8 +48,7 @@ public class StaffBusServiceImpl implements StaffBusService {
 			throw new StaffManagerException(StaffManagerException.ExceptionMessage.NO_STAFF_MEMBER_EXISTS);
 		}else {
 			StaffMember staff = opt.get();
-			Optional<String> busId = Optional.ofNullable(staff.getAssignedBus());
-			return busId;
+			return Optional.ofNullable(staff.getAssignedBus());
 		}
 	}
 
